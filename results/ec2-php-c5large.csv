@@ -1,0 +1,20 @@
+ec2-php-c5large
+KVM testing on Amazon Linux 2 via the Phoronix Test Suite.
+
+ ,,"php71","php72","php74","php8"
+Processor,,Intel Xeon Platinum 8275CL (1 Core / 2 Threads),Intel Xeon Platinum 8275CL (1 Core / 2 Threads),Intel Xeon Platinum 8275CL (1 Core / 2 Threads),Intel Xeon Platinum 8275CL (1 Core / 2 Threads)
+Motherboard,,Amazon EC2 c5.large (1.0 BIOS),Amazon EC2 c5.large (1.0 BIOS),Amazon EC2 c5.large (1.0 BIOS),Amazon EC2 c5.large (1.0 BIOS)
+Chipset,,Intel 440FX 82441FX PMC,Intel 440FX 82441FX PMC,Intel 440FX 82441FX PMC,Intel 440FX 82441FX PMC
+Memory,,1 x 4096 MB DDR4-2933MHz,1 x 4096 MB DDR4-2933MHz,1 x 4096 MB DDR4-2933MHz,1 x 4096 MB DDR4-2933MHz
+Disk,,9GB Amazon Elastic Block Store,9GB Amazon Elastic Block Store,9GB Amazon Elastic Block Store,9GB Amazon Elastic Block Store
+Network,,Amazon Elastic,Amazon Elastic,Amazon Elastic,Amazon Elastic
+OS,,Amazon Linux 2,Amazon Linux 2,Amazon Linux 2,Amazon Linux 2
+Kernel,,4.14.238-182.422.amzn2.x86_64 (x86_64),4.14.238-182.422.amzn2.x86_64 (x86_64),4.14.238-182.422.amzn2.x86_64 (x86_64),4.14.238-182.422.amzn2.x86_64 (x86_64)
+Compiler,,GCC 7.3.1 20180712,GCC 7.3.1 20180712,GCC 7.3.1 20180712,GCC 7.3.1 20180712
+File-System,,xfs,xfs,xfs,xfs
+System Layer,,KVM,KVM,KVM,KVM
+
+ ,,"php71","php72","php74","php8"
+"PHP Micro Benchmarks - Test: Zend bench (sec)",LIB,0.497,0.482,0.372,0.332
+"PHP Micro Benchmarks - Test: Zend micro_bench (sec)",LIB,2.629,2.447,1.959,1.889
+

@@ -1,0 +1,20 @@
+ec2-php-t2large
+Xen HVM domU 4.2.amazon testing on Amazon Linux 2 via the Phoronix Test Suite.
+
+ ,,"php71","php72","php74","php8"
+Processor,,Intel Xeon E5-2676 v3 (2 Cores),Intel Xeon E5-2676 v3 (2 Cores),Intel Xeon E5-2676 v3 (2 Cores),Intel Xeon E5-2676 v3 (2 Cores)
+Motherboard,,Xen HVM domU (4.2.amazon BIOS),Xen HVM domU (4.2.amazon BIOS),Xen HVM domU (4.2.amazon BIOS),Xen HVM domU (4.2.amazon BIOS)
+Chipset,,Intel 440FX 82441FX PMC,Intel 440FX 82441FX PMC,Intel 440FX 82441FX PMC,Intel 440FX 82441FX PMC
+Memory,,1 x 8192 MB RAM,1 x 8192 MB RAM,1 x 8192 MB RAM,1 x 8192 MB RAM
+Disk,,8GB,8GB,8GB,8GB
+Graphics,,Cirrus Logic GD 5446,Cirrus Logic GD 5446,Cirrus Logic GD 5446,Cirrus Logic GD 5446
+OS,,Amazon Linux 2,Amazon Linux 2,Amazon Linux 2,Amazon Linux 2
+Kernel,,4.14.238-182.422.amzn2.x86_64 (x86_64),4.14.238-182.422.amzn2.x86_64 (x86_64),4.14.238-182.422.amzn2.x86_64 (x86_64),4.14.238-182.422.amzn2.x86_64 (x86_64)
+Compiler,,GCC 7.3.1 20180712,GCC 7.3.1 20180712,GCC 7.3.1 20180712,GCC 7.3.1 20180712
+File-System,,xfs,xfs,xfs,xfs
+System Layer,,Xen HVM domU 4.2.amazon,Xen HVM domU 4.2.amazon,Xen HVM domU 4.2.amazon,Xen HVM domU 4.2.amazon
+
+ ,,"php71","php72","php74","php8"
+"PHP Micro Benchmarks - Test: Zend bench (sec)",LIB,0.675,0.659,0.527,0.473
+"PHP Micro Benchmarks - Test: Zend micro_bench (sec)",LIB,3.899,3.504,2.863,2.733
+
