@@ -6,12 +6,15 @@ import { PhpPerfomanceS3Stack } from "../lib/php-perfomance-s3-stack";
 
 const app = new cdk.App();
 
-const env_us_east_1 = {
-  account: "ACCOUNT_ID",
-  region: "us-east-1",
-};
+const vpcid = app.node.tryGetContext("vpcid");
+const accountid = app.node.tryGetContext("accountid");
+const region = app.node.tryGetContext("region");
+const ec2Key = app.node.tryGetContext("ec2key");
 
-const bucket = new PhpPerfomanceS3Stack(app, "PhpPerformance-S3", { env: env_us_east_1 });
+const env_us_east_1 = {
+  account: accountid,
+  region: region,
+};
 
 const instances = [
   "m5n.large",
@@ -35,19 +38,25 @@ const instances = [
   "t3a.large",
   "t2.large",
   "t4g.large",
-]; 
+];
 
+if (vpcid == null && accountid == null && region == null && ec2Key == null) {
+  console.log("please specify all context variables");
+  throw new Error("No arguments");
+} else {
+  const bucket = new PhpPerfomanceS3Stack(app, "PhpPerformance-S3", { env: env_us_east_1 });
 
-for (const instance of instances) {
-  new PhpPerfomanceEc2Stack(
-    app,
-    "PhpPerformance-" + instance.replace(".", "-"),
-    instance,
-    bucket.myBucket,
-    "KEYNAME",
-    "VPCID",
-    {
-      env: env_us_east_1,
-    }
-  );
+  for (const instance of instances) {
+    new PhpPerfomanceEc2Stack(
+      app,
+      "PhpPerformance-" + instance.replace(".", "-"),
+      instance,
+      bucket.myBucket,
+      ec2Key,
+      vpcid,
+      {
+        env: env_us_east_1,
+      }
+    );
+  }
 }
