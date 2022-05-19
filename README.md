@@ -38,7 +38,7 @@ https://www.klik-mall.com/web/development/2-new-php-performance-numbers-for-a-be
 
 ## Start the tests
 
-    cdk deploy --all --require-approval never
+    cdk deploy --all --require-approval never --context vpcid=YOURVPCID --context accountid=YOURACCOUNTID --context region=AWSREGION --context ec2key=YOURKEYNAME
 
 
 ## Sponsor 

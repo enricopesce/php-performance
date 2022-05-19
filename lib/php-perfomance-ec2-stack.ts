@@ -46,35 +46,30 @@ export class PhpPerfomanceEc2Stack extends cdk.Stack {
       })
     );
 
-    let phpInstance: ec2.Instance;
+    let ec2Image: ec2.IMachineImage;
 
     if (instanceType.startsWith("m6g") || instanceType.startsWith("c6g") || instanceType.startsWith("t4g")) {
-      phpInstance = new ec2.Instance(this, "Instance", {
-        instanceType: new ec2.InstanceType(instanceType),
-        machineImage: ec2.MachineImage.latestAmazonLinux({
-          cpuType: ec2.AmazonLinuxCpuType.ARM_64,
-          generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
-        }),
-        vpc: vpc,
-        securityGroup: sg,
-        keyName: "test",
-        vpcSubnets: { subnetType: ec2.SubnetType.PUBLIC },
-        role: role,
+      ec2Image = ec2.MachineImage.latestAmazonLinux({
+        cpuType: ec2.AmazonLinuxCpuType.ARM_64,
+        generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
       });
     } else {
-      phpInstance = new ec2.Instance(this, "Instance", {
-        instanceType: new ec2.InstanceType(instanceType),
-        machineImage: ec2.MachineImage.latestAmazonLinux({
-          cpuType: ec2.AmazonLinuxCpuType.X86_64,
-          generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
-        }),
-        vpc: vpc,
-        securityGroup: sg,
-        keyName: key,
-        vpcSubnets: { subnetType: ec2.SubnetType.PUBLIC },
-        role: role,
+      ec2Image = ec2.MachineImage.latestAmazonLinux({
+        cpuType: ec2.AmazonLinuxCpuType.X86_64,
+        generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
       });
     }
+
+    const phpInstance = new ec2.Instance(this, "Instance", {
+      instanceType: new ec2.InstanceType(instanceType),
+      machineImage: ec2Image,
+      vpc: vpc,
+      securityGroup: sg,
+      keyName: key,
+      vpcSubnets: { subnetType: ec2.SubnetType.PUBLIC },
+      role: role,
+      blockDevices: [{ deviceName: "/dev/xvda", volume: ec2.BlockDeviceVolume.ebs(200) }],
+    });
 
     phpInstance.addUserData("sudo su -");
 
