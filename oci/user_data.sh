@@ -1,14 +1,13 @@
 #! /bin/bash
 export OCI_CLI_AUTH=instance_principal
+export TEST_RESULTS_NAME=$(oci-metadata --get TEST_RESULTS_NAME --value)
+declare -xp
 
 # stop cpu tasks
 systemctl stop dnf-makecache.timer
 systemctl stop dnf-system-upgrade.service
 systemctl stop dnf-system-upgrade-cleanup.service
 systemctl stop dnf-makecache.service
-systemctl stop oracle-cloud-agent.service
-systemctl stop oracle-cloud-agent-updater.service
-
 # update dependencies
 dnf -y install oraclelinux-developer-release-el8 python36-oci-cli
 
@@ -106,7 +105,7 @@ echo '<?xml version="1.0"?>
 </PhoronixTestSuite>' > /etc/phoronix-test-suite.xml
 
 # export SKIP_EXTERNAL_DEPENDENCIES=1
-export TEST_RESULTS_NAME=$(oci-metadata --get TEST_RESULTS_NAME --value)
+
 
 # Install PHP 7.2
 export TEST_RESULTS_IDENTIFIER="php72"
@@ -139,4 +138,4 @@ phoronix-test-suite result-file-to-csv $TEST_RESULTS_NAME
 
 oci os object put --force --bucket-name phoronix --file /root/$TEST_RESULTS_NAME.csv
 
-#oci compute instance action --instance-id $(oci-metadata --get id --value-only) --action SOFTSTOP
+oci compute instance action --instance-id $(oci-metadata --get id --value-only) --action SOFTSTOP
