@@ -1,0 +1,5 @@
+tenancy_ocid     = "ocid1.tenancy.oc1..aaaaaaaa2h4xgua7dpxaujaywt3oztgxcw4w3npgzqyhwqcq6s23tsco4a5a"
+region           = "eu-frankfurt-1"
+compartment_id   = "ocid1.compartment.oc1..aaaaaaaawdnpqa74qyku5mzjk3httbooikrw67cbutdsohf2ljxkdyjvbala"
+application_name = "performancetests"
+object_storage_name = "phoronix"
