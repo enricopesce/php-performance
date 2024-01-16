@@ -1,6 +1,7 @@
 #! /bin/bash
 export OCI_CLI_AUTH=instance_principal
 export TEST_RESULTS_NAME=$(oci-metadata --get TEST_RESULTS_NAME --value)
+export TEST_ID=$(oci-metadata --get TEST_ID --value)
 declare -xp
 
 # stop cpu tasks
@@ -134,8 +135,9 @@ dnf module switch-to php:8.0 -y
 dnf install php-cli php-pdo php-fpm php-json php-mysqlnd php-dom php-gd php-process -y
 phoronix-test-suite batch-benchmark pts/php
 
+# Create report files
 phoronix-test-suite result-file-to-csv $TEST_RESULTS_NAME
 
-oci os object put --force --bucket-name phoronix --file /root/$TEST_RESULTS_NAME.csv
+oci os object put --force --bucket-name phoronix --file /root/$TEST_RESULTS_NAME.csv --name /$TEST_ID/$TEST_RESULTS_NAME.csv
 
 oci compute instance action --instance-id $(oci-metadata --get id --value-only) --action SOFTSTOP

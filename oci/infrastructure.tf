@@ -20,6 +20,7 @@ locals {
   ocpu = 1
 }
 
+resource "random_uuid" "test_id" {}
 
 resource "oci_core_vcn" "test_vcn" {
   cidr_block     = "10.0.0.0/16"
@@ -90,6 +91,7 @@ resource "oci_core_instance" "instance" {
       ssh_authorized_keys = "${file("./id_rsa.pub")}"
       user_data = "${base64encode(file("./user_data.sh"))}"
       TEST_RESULTS_NAME = each.value.testname
+      TEST_ID = random_uuid.test_id.result
     }
     preserve_boot_volume = false
 }
