@@ -1,5 +1,5 @@
 provider "oci" {
-  region           = var.region
+  region = var.region
 }
 
 variable "shape_list" {
@@ -9,15 +9,15 @@ variable "shape_list" {
 
 locals {
   nodes = {
-    for i, val in var.shape_list:
+    for i, val in var.shape_list :
     i => {
-      node_name  = format("node%d", i)
-      shape = val
-      testname = lower(replace(val, ".", ""))
+      node_name = format("node%d", i)
+      shape     = val
+      testname  = lower(replace(val, ".", ""))
     }
   }
   memory = 16
-  ocpu = 1
+  ocpu   = 1
 }
 
 resource "random_uuid" "test_id" {}
@@ -59,41 +59,41 @@ data "oci_identity_availability_domains" "ads" {
 }
 
 data "oci_core_images" "images" {
-    compartment_id = var.compartment_id
-    operating_system         = "Oracle Linux"
-    operating_system_version = "8"
-    for_each                 = local.nodes
-    shape                    = each.value.shape
+  compartment_id           = var.compartment_id
+  operating_system         = "Oracle Linux"
+  operating_system_version = "8"
+  for_each                 = local.nodes
+  shape                    = each.value.shape
 }
 
 resource "oci_core_instance" "instance" {
-    for_each = local.nodes
-    display_name = each.value.node_name
-    availability_domain = data.oci_identity_availability_domains.ads.availability_domains[0].name
-    compartment_id = var.compartment_id
-    shape = each.value.shape
-    create_vnic_details {
-      subnet_id  = oci_core_subnet.public_subnet.id
-    }    
-    agent_config {
-        is_management_disabled = true
-        is_monitoring_disabled = true
-    }
-    shape_config {
-        memory_in_gbs = local.memory
-        ocpus = local.ocpu
-    }
-    source_details {
-        source_id = data.oci_core_images.images[each.key].images[0].id
-        source_type = "image"
-    }
-    metadata = {
-      ssh_authorized_keys = "${file("./id_rsa.pub")}"
-      user_data = "${base64encode(file("./user_data.sh"))}"
-      TEST_RESULTS_NAME = each.value.testname
-      TEST_ID = random_uuid.test_id.result
-    }
-    preserve_boot_volume = false
+  for_each            = local.nodes
+  display_name        = each.value.node_name
+  availability_domain = data.oci_identity_availability_domains.ads.availability_domains[0].name
+  compartment_id      = var.compartment_id
+  shape               = each.value.shape
+  create_vnic_details {
+    subnet_id = oci_core_subnet.public_subnet.id
+  }
+  agent_config {
+    is_management_disabled = true
+    is_monitoring_disabled = true
+  }
+  shape_config {
+    memory_in_gbs = local.memory
+    ocpus         = local.ocpu
+  }
+  source_details {
+    source_id   = data.oci_core_images.images[each.key].images[0].id
+    source_type = "image"
+  }
+  metadata = {
+    ssh_authorized_keys = "${file("./id_rsa.pub")}"
+    user_data           = "${base64encode(file("./user_data.sh"))}"
+    TEST_RESULTS_NAME   = each.value.testname
+    TEST_ID             = random_uuid.test_id.result
+  }
+  preserve_boot_volume = false
 }
 
 
